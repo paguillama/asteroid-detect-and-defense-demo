@@ -1,0 +1,11 @@
+{
+  "name": "asteroid-detect-and-defense-demo",
+  "version": "1.0.0",
+  "description": "Johnny-Five demo files of 'Building robots with JS' presentation",
+  "main": "index.js",
+  "author": "Pablo Guillama",
+  "license": "MIT",
+  "dependencies": {
+    "johnny-five": "^0.9.41"
+  }
+}
