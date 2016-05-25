@@ -6,9 +6,9 @@ var MIN_DISTANCE = 10;
 var MAX_DISTANCE = 30;
 var BREAKPOINT_PERCENTAGE = 50;
 
-var ATTACK_OFF = 'off';
-var ATTACK_ON = 'blink';
-var ATTACK_SHOOT = 'on';
+var DEFENSE_OFF = 'off';
+var DEFENSE_READY = 'blink';
+var DEFENSE_SHOOT = 'on';
 
 var DISTANCE_RANGE = MAX_DISTANCE - MIN_DISTANCE; // 20
 var BREAKPOINT_CMS = MIN_DISTANCE + DISTANCE_RANGE * BREAKPOINT_PERCENTAGE / 100; // 20
@@ -80,7 +80,7 @@ defenseBoard.on('ready', function() {
 
   // Binds joystick movements to servos
   joystick.on('change', function() {
-    if (attackState && attackState !== ATTACK_OFF) {
+    if (defenseState && defenseState !== DEFENSE_OFF) {
       xServo.to(90 - this.x * 180);
       yServo.to(90 + this.y * 180);
     }
@@ -98,19 +98,19 @@ defenseBoard.on('ready', function() {
 
 });
 
-var attackState = null;
+var defenseState = null;
 function updateDefense() {
-  var newState = attackState;
+  var newState = defenseState;
 
   if (distance === null || distance > BREAKPOINT_CMS) {
-    newState = ATTACK_OFF;
+    newState = DEFENSE_OFF;
   } else {
-    newState = shooting ? ATTACK_SHOOT : ATTACK_ON;
+    newState = shooting ? DEFENSE_SHOOT : DEFENSE_READY;
   }
 
-  if (laser && newState !== attackState) {
+  if (laser && newState !== defenseState) {
     laser.stop();
-    attackState = newState;
+    defenseState = newState;
     laser[newState](); // laser.off() | laser.blink() | laser.on()
   }
 
